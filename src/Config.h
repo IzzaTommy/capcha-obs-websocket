@@ -34,7 +34,7 @@ struct Config {
 	std::atomic<bool> PasswordOverridden = false;
 
 	std::atomic<bool> FirstLoad = true;
-	std::atomic<bool> ServerEnabled = false;
+	std::atomic<bool> ServerEnabled = true;
 	std::atomic<uint16_t> ServerPort = 4455;
 	std::atomic<bool> Ipv4Only = false;
 	std::atomic<bool> DebugEnabled = false;
