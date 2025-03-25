@@ -325,6 +325,7 @@ RequestResult RequestHandler::OpenSourceProjector(const Request &request)
  */
 RequestResult RequestHandler::GetDisplayList(const Request &request)
 {
+	unsigned short count = 0;
 	json responseData;
 	std::vector<json> displaysData;
 	struct display_info *display_list_head = nullptr;
@@ -333,8 +334,13 @@ RequestResult RequestHandler::GetDisplayList(const Request &request)
 	get_displays(&display_list_head);
 
 	while (display_list_head != nullptr) {
+		std::string device_id_str = display_list_head -> device_id;
+		unsigned short start = device_id_str.find("#");
+		unsigned short end = device_id_str.find("#", start + 1);
 		json displayData;
-		displayData["displayDeviceId"] = display_list_head -> device_id + 4;
+		displayData["displayIndex"] = count;
+		displayData["displayModelId"] = device_id_str.substr(start + 1, end - start - 1);
+		displayData["displayDeviceId"] = display_list_head -> device_id;
 		displayData["displayX"] = display_list_head -> rect.right - display_list_head -> rect.left;
 		displayData["displayY"] = display_list_head -> rect.bottom - display_list_head -> rect.top;
 		displayData["displayPositionX"] = display_list_head -> rect.left;
@@ -343,6 +349,7 @@ RequestResult RequestHandler::GetDisplayList(const Request &request)
 		temp = display_list_head;
 		display_list_head = display_list_head -> prev;
 		free(temp);
+		count++;
 	}
 	responseData["displays"] = displaysData;
 	return RequestResult::Success(responseData);
