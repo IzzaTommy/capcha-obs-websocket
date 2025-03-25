@@ -23,6 +23,9 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <sstream>
 
 #include "RequestHandler.h"
+// Added by Thomas Joel on 03/25/25
+#include "../utils/Display.h"
+// End of addition
 
 /**
  * Gets whether studio is enabled.
@@ -306,3 +309,42 @@ RequestResult RequestHandler::OpenSourceProjector(const Request &request)
 
 	return RequestResult::Success();
 }
+
+// Added by Thomas Joel on 03/25/25
+/**
+ * Gets a list of displays and information about them (Made for CapCha).
+ *
+ * @responseField displays | Array<Object> | a list of detected displays with some information
+ *
+ * @requestType GetDisplaysList
+ * @complexity 3
+ * @rpcVersion -1
+ * @initialVersion 5.5.4
+ * @category ui
+ * @api requests
+ */
+RequestResult RequestHandler::GetDisplayList(const Request &request)
+{
+	json responseData;
+	std::vector<json> displaysData;
+	struct display_info *display_list_head = nullptr;
+	struct display_info *temp = nullptr;
+
+	get_displays(&display_list_head);
+
+	while (display_list_head != nullptr) {
+		json displayData;
+		displayData["displayDeviceId"] = display_list_head -> device_id + 4;
+		displayData["displayX"] = display_list_head -> rect.right - display_list_head -> rect.left;
+		displayData["displayY"] = display_list_head -> rect.bottom - display_list_head -> rect.top;
+		displayData["displayPositionX"] = display_list_head -> rect.left;
+		displayData["displayPositionY"] = display_list_head -> rect.top;
+		displaysData.push_back(displayData);
+		temp = display_list_head;
+		display_list_head = display_list_head -> prev;
+		free(temp);
+	}
+	responseData["displays"] = displaysData;
+	return RequestResult::Success(responseData);
+}
+// End of addition

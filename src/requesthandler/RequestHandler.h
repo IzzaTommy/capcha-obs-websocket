@@ -218,6 +218,9 @@ private:
 	RequestResult GetMonitorList(const Request &);
 	RequestResult OpenVideoMixProjector(const Request &);
 	RequestResult OpenSourceProjector(const Request &);
+	// Added by Thomas Joel on 03/25/25
+	RequestResult GetDisplayList(const Request &);
+	// End of addition
 
 	SessionPtr _session;
 	static const std::unordered_map<std::string, RequestMethodHandler> _handlerMap;

@@ -2755,6 +2755,7 @@ communication is desired.
   - [GetMonitorList](#getmonitorlist)
   - [OpenVideoMixProjector](#openvideomixprojector)
   - [OpenSourceProjector](#opensourceprojector)
+  - [GetDisplaysList](#getdisplayslist)
 
 ## General Requests
 
@@ -5668,3 +5669,19 @@ Note: This request serves to provide feature parity with 4.x. It is very likely 
 | ?sourceUuid | String | UUID of the source to open a projector for | None | Unknown |
 | ?monitorIndex | Number | Monitor index, use `GetMonitorList` to obtain index | None | -1: Opens projector in windowed mode |
 | ?projectorGeometry | String | Size/Position data for a windowed projector, in Qt Base64 encoded format. Mutually exclusive with `monitorIndex` | None | N/A |
+
+---
+
+### GetDisplaysList
+
+Gets a list of displays and information about them (Made for CapCha).
+
+- Complexity Rating: `3/5`
+- Latest Supported RPC Version: `1`
+- Added in v5.5.4
+
+**Response Fields:**
+
+| Name | Type  | Description |
+| ---- | :---: | ----------- |
+| displays | Array&lt;Object&gt; | a list of detected displays with some information |

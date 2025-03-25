@@ -109,6 +109,10 @@ target_sources(
           src/utils/Compat.h
           src/utils/Crypto.cpp
           src/utils/Crypto.h
+          # Added by Thomas Joel on 03/25/25
+          src/utils/Display.c
+          src/utils/Display.h
+          # End of addition
           src/utils/Json.cpp
           src/utils/Json.h
           src/utils/Obs.cpp
